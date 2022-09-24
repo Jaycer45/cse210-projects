@@ -19,7 +19,6 @@ namespace SandboxProject
             while (!game_over(board))
             {
                 display_board(board);
-
                 int choice = square_choice(current_player);
                 make_move(board, current_player, choice);
 
@@ -32,12 +31,13 @@ namespace SandboxProject
 
 
 
-        static int get_user_choice(string current_player)
+        static int square_choice(string current_player)
         {
             Console.WriteLine($"{current_player}'s turn to choose a square (1-9): ");
-            int square_choice = int.Parse(Console.ReadLine());
+            string move_string = Console.ReadLine();
+            int choice = int.Parse(Console.ReadLine());
 
-            return square_choice;
+            return choice;
         }
 
         static void make_move(List<string> board, string current_player, int square_choice)
@@ -99,14 +99,6 @@ namespace SandboxProject
             }
 
             return next_player;
-        }
-
-        static int square_choice(string current_player)
-        {
-            Console.Write($"{current_player}'s turn to choose a square (1-9): ");
-            string move_string = Console.ReadLine();
-            int choice = int.Parse(move_string);
-            return choice;
         }
 
         static bool is_winner(List<string> board, string player)
