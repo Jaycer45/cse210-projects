@@ -9,7 +9,7 @@ namespace Prep5
         {
             Console.WriteLine("This is Prep 5");
 
-             DisplayWelcomeMessage();
+            DisplayWelcomeMessage();
 
             string userName = PromptUserName();
             int userNumber = PromptUserNumber();
