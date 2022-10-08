@@ -7,7 +7,7 @@ namespace Unit02.HiLo
         static void Main(string[] args)
         {
             Director director = new Director();
-            director.StartGame();
+            director.start_game();
         }
     }
 }
