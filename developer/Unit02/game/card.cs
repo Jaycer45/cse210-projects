@@ -1,44 +1,24 @@
 using System;
 
 
-namespace Unit02.Game
+namespace Unit02.HiLo
 {
-    /// <summary>
-    /// A small cube with a different number of spots on each of its six sides.
-    /// 
-    /// The responsibility of Die is to keep track of its currently rolled value and the points its
-    /// worth.
-    /// </summary> 
+    
     public class Card
     {
-        public int card_value = 0;
+        public int cardValue = 0;
+        
 
-        /// <summary>
-        /// Constructs a new instance of Die.
-        /// </summary>
+        /// Makes the Card class public
         public Card()
         {
         }
 
-        /// <summary>
-        /// Generates a new random value and calculates the points for the die.
-        /// </summary>
-        public void Draw()
+        /// Generates a new random value for a card value.
+        public void getNewCard()
         {
-            Random random = new Random();
-            card_value = random.Next(1, 14);
-            if (c < card_value)
-            {
-                _points = 100;
-            }
-            else if (user_guess > card_value)
-            {
-                _points = -75;
-            }
-            else
-            {
-                _points = 0;
-            }
+            Random randomGenerator = new Random();
+            cardValue = randomGenerator.Next(1, 14);
         }
 
     }

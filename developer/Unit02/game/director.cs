@@ -2,96 +2,112 @@ using System;
 using System.Collections.Generic;
 
 
-namespace Unit02.Game
+namespace Unit02.HiLo
 {
-    /// <summary>
-    /// A person who directs the game. 
-    ///
-    /// The responsibility of a Director is to control the sequence of play.
-    /// </summary>
+    /// The Director will help set the pace of the game
     public class Director
     {
         List<Card> cards = new List<Card>();
-        int current_card;
-        bool _isPlaying = true;
-        int _score = 0;
-        int correct_guess = 100;
-        int incorrect_guess = 75;
-        int next_card;
-        int start_score = 300;
+        int start_points = 300;
+        bool is_playing = true;
+        int is_right = 100;
+        int is_wrong = 75;
 
-        /// <summary>
-        /// Constructs a new instance of Director.
-        /// </summary>
+        int current_card;
+        int next_card;
+
+        /// You can only draw 1 card at a time
         public Director()
         {
-            for (int i = 0; i < 1; i++){
-                 Card card = new Card();
+            for (int i = 0; i < 1; i++)
+            {
+                Card card = new Card();
                 cards.Add(card);
             }
         }
 
-        /// <summary>
-        /// Starts the game by running the main game loop.
-        /// </summary>
+        /// The game starts by issuing a card
         public void StartGame()
         {
-            while (_isPlaying)
+            foreach (Card card in cards)
             {
-                GetInputs();
-                DoUpdates();
-                DoOutputs();
+                card.getNewCard();
+                current_card = card.cardValue;
+            }
+
+            while (is_playing)
+            {
+                gameMain();
+                gameResume();
             }
         }
-
-        /// <summary>
-        /// Asks the user if they want to roll.
-        /// </summary>
-        public void GetInputs()
+        public void gameMain()
         {
-            Console.Write($"A Card is: {Card}" );
-            Console.Write("Higher or Lower? [h/l] " );
-            string user_guess = Console.ReadLine();
-            _isPlaying = (rollDice == "y");
+            Console.WriteLine($"The card is {current_card}");
+            if (!is_playing)
+            {
+                return;
+            }
+            foreach (Card card in cards)
+            {
+                card.getNewCard();
+                next_card = card.cardValue;
+            }
+            
+            Console.Write("Higher or Lower? [h/l]: ");
+            string cardGuess = Console.ReadLine();
+            Console.WriteLine($"The next card was:{next_card}");
+
+            
+            if (cardGuess == "h" && current_card < next_card)
+            {
+                start_points += is_right;
+            }
+
+            else if (cardGuess == "h" && current_card > next_card)
+            {
+                start_points -= is_wrong;
+                if (start_points < 0)
+                {
+                    start_points = 0;
+                }
+            }
+
+            if (cardGuess == "l" && current_card > next_card)
+            {
+                start_points += is_right;
+            }
+
+            else if (cardGuess == "l" && current_card < next_card)
+            {
+                start_points -= is_wrong;
+                if (start_points < 0)
+                {
+                    start_points = 0;
+                }
+            }
+
+
         }
 
-        /// <summary>
-        /// Updates the player's score.
-        /// </summary>
-        public void DoUpdates()
+        public void gameResume()
         {
-            if (!_isPlaying)
+            Console.WriteLine($"Your score is {start_points}");
+            if (start_points == 0)
+            {
+                is_playing = false;
+                Console.WriteLine("Game Over");
+            }
+
+            if (!is_playing)
             {
                 return;
             }
 
-            _score = 0;
-            {
-                card.Draw();
-                _score += card._points;
-            }
-            _totalScore += _score;
-        }
-
-        /// <summary>
-        /// Displays the dice and the score. Also asks the player if they want to roll again. 
-        /// </summary>
-        public void DoOutputs()
-        {
-            if (!_isPlaying)
-            {
-                return;
-            }
-
-            string values = "";
-            foreach (Die die in _dice)
-            {
-                values += $"{die._value} ";
-            }
-
-            Console.WriteLine($"You rolled: {values}");
-            Console.WriteLine($"Your score is: {_totalScore}\n");
-            _isPlaying = (_score > 0);
+            current_card = next_card;
+            Console.Write("Play again? [y/n]: ");
+            string keepPlaying = Console.ReadLine();
+            is_playing = (keepPlaying == "y");
         }
     }
 }
