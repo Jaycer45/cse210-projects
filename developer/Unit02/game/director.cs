@@ -12,10 +12,8 @@ namespace Unit02.HiLo
         bool is_playing = true;
         int is_right = 100;
         int is_wrong = 75;
-
         int current_card;
         int next_card;
-
         /// You can only draw 1 card at a time
         public Director()
         {
@@ -25,9 +23,8 @@ namespace Unit02.HiLo
                 cards.Add(card);
             }
         }
-
         /// The game starts by issuing a card
-        public void StartGame()
+        public void start_game()
         {
             foreach (Card card in cards)
             {
@@ -37,13 +34,13 @@ namespace Unit02.HiLo
 
             while (is_playing)
             {
-                gameMain();
-                gameResume();
+                main();
+                point_tracker();
             }
         }
-        public void gameMain()
+        public void main()
         {
-            Console.WriteLine($"The card is {current_card}");
+            Console.WriteLine($"The card is: {current_card}");
             if (!is_playing)
             {
                 return;
@@ -55,16 +52,16 @@ namespace Unit02.HiLo
             }
             
             Console.Write("Higher or Lower? [h/l]: ");
-            string cardGuess = Console.ReadLine();
-            Console.WriteLine($"The next card was:{next_card}");
+            string card_guess = Console.ReadLine();
+            Console.WriteLine($"The next card was: {next_card}");
 
             
-            if (cardGuess == "h" && current_card < next_card)
+            if (card_guess == "h" && current_card < next_card)
             {
                 start_points += is_right;
             }
 
-            else if (cardGuess == "h" && current_card > next_card)
+            else if (card_guess == "h" && current_card > next_card)
             {
                 start_points -= is_wrong;
                 if (start_points < 0)
@@ -73,12 +70,12 @@ namespace Unit02.HiLo
                 }
             }
 
-            if (cardGuess == "l" && current_card > next_card)
+            if (card_guess == "l" && current_card > next_card)
             {
                 start_points += is_right;
             }
 
-            else if (cardGuess == "l" && current_card < next_card)
+            else if (card_guess == "l" && current_card < next_card)
             {
                 start_points -= is_wrong;
                 if (start_points < 0)
@@ -90,13 +87,13 @@ namespace Unit02.HiLo
 
         }
 
-        public void gameResume()
+        public void point_tracker()
         {
-            Console.WriteLine($"Your score is {start_points}");
+            Console.WriteLine($"Your score is: {start_points}");
             if (start_points == 0)
             {
                 is_playing = false;
-                Console.WriteLine("Game Over");
+                Console.WriteLine("Game Over!");
             }
 
             if (!is_playing)
@@ -106,8 +103,8 @@ namespace Unit02.HiLo
 
             current_card = next_card;
             Console.Write("Play again? [y/n]: ");
-            string keepPlaying = Console.ReadLine();
-            is_playing = (keepPlaying == "y");
+            string keep_playing = Console.ReadLine();
+            is_playing = (keep_playing == "y");
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Unit02.HiLo
         {
         }
 
-        /// Generates a new random value for a card value.
+        /// Creates a value for the card so we can use that to keep score
         public void getNewCard()
         {
             Random randomGenerator = new Random();
